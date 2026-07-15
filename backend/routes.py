@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-import traceback # Error detail nikalne ke liye
+import traceback 
 from chatbot import get_ai_response
 from navigation import get_smart_route, load_map_data
 from dashboard import get_dashboard_data
@@ -36,11 +36,8 @@ async def chat_endpoint(request: ChatRequest):
         reply = get_ai_response(request.message, request.language)
         return ChatResponse(reply=reply)
     except Exception as e:
-        # ASLI ERROR PRINT KAREGA RENDER LOGS MEIN
         print(f"🔥 CHAT CRASH REPORT: {str(e)}")
         print(traceback.format_exc())
-        
-        # FRONTEND PAR BHI ASLI ERROR BHEJEGA
         raise HTTPException(status_code=500, detail=f"AI Error: {str(e)}")
 
 @router.get("/locations")
@@ -51,8 +48,14 @@ async def locations_endpoint():
 async def navigate_endpoint(request: NavRequest):
     return get_smart_route(request.start, request.destination)
 
+# Dashboard static endpoint
 @router.get("/dashboard")
 async def dashboard_endpoint():
+    return get_dashboard_data()
+
+# DYNAMIC TELEMETRY ENDPOINT (Dashboard.js ke liye fix)
+@router.get("/telemetry")
+async def telemetry_endpoint():
     return get_dashboard_data()
 
 @router.post("/volunteer/sop")
