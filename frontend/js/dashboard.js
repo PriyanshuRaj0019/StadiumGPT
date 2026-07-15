@@ -1,115 +1,217 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // Apne setup ke hisab se backend URL adjust karein (e.g., localhost ya render URL)
-    const API_BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-        ? "http://127.0.0.1:8000"
-        : "https://stadiumgpt.onrender.com"; // Replace with your production Render backend URL if deployed
 
-    // 1. Initial Empty Data Arrays for Real-time Generation
-    const gateLabels = ['Gate A', 'Gate B', 'Gate C', 'Gate D', 'Gate E'];
-    const initialGateData = [15, 45, 12, 60, 25]; // Simulation initial points in minutes
-    
-    const foodLabels = ['North Food Plaza', 'South Concession', 'East Lounge', 'West Fast Food'];
-    const initialFoodData = [30, 85, 40, 55]; // Capacity percentages
+// ======================================================
+// StadiumGPT Dashboard
+// dashboard.js
+// ======================================================
 
-    // 2. Initialize Gate Congestion Bar Chart
-    const gateCtx = document.getElementById('gateChart').getContext('2d');
-    const gateChart = new Chart(gateCtx, {
-        type: 'bar',
-        data: {
-            labels: gateLabels,
-            datasets: [{
-                label: 'Wait Time (Minutes)',
-                data: initialGateData,
-                backgroundColor: 'rgba(52, 211, 153, 0.6)',
-                borderColor: 'rgba(52, 211, 153, 1)',
-                borderWidth: 2,
-                borderRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
-                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
-            },
-            plugins: {
-                legend: { display: false }
-            }
+// Change this before deployment if required
+const API_BASE =
+    window.location.hostname === "localhost"
+        ? "http://localhost:8000/api"
+        : "https://stadiumgpt.onrender.com/api";
+
+
+// ===============================
+// Live Clock
+// ===============================
+
+function updateClock() {
+
+    const now = new Date();
+
+    document.getElementById("current-time").innerHTML =
+        now.toLocaleString("en-US", {
+            weekday: "short",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        });
+
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+
+// ===============================
+// Count Animation
+// ===============================
+
+function animateValue(id, endValue, duration = 1200) {
+
+    const element = document.getElementById(id);
+
+    if (!element) return;
+
+    let start = 0;
+
+    const increment = endValue / (duration / 16);
+
+    function update() {
+
+        start += increment;
+
+        if (start >= endValue) {
+
+            element.innerHTML = endValue;
+
+            return;
+
         }
-    });
 
-    // 3. Initialize Food Court Load Line Chart
-    const foodCtx = document.getElementById('foodChart').getContext('2d');
-    const foodChart = new Chart(foodCtx, {
-        type: 'line',
-        data: {
-            labels: foodLabels,
-            datasets: [{
-                label: 'Occupancy Load %',
-                data: initialFoodData,
-                borderColor: '#f59e0b',
-                backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                tension: 0.4,
-                fill: true,
-                borderWidth: 3,
-                pointBackgroundColor: '#f59e0b'
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: { max: 100, beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
-                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
-            },
-            plugins: {
-                legend: { display: false }
-            }
-        }
-    });
+        element.innerHTML = Math.floor(start);
 
-    // 4. Async function to poll backend telemetry endpoint if implemented
-    async function updateDashboardTelemetry() {
-        try {
-            const response = await fetch(`${API_BASE_URL}/api/telemetry`);
-            if (response.ok) {
-                const data = await response.json();
-                
-                // Update live text metrics
-                if (data.attendance) document.getElementById("stat-attendance").innerText = data.attendance.toLocaleString();
-                if (data.avgWaitTime) document.getElementById("stat-wait-time").innerText = `${data.avgWaitTime} mins`;
-                if (data.incidents !== undefined) document.getElementById("stat-incidents").innerText = data.incidents;
-                if (data.riskLevel) document.getElementById("stat-risk").innerText = data.riskLevel;
+        requestAnimationFrame(update);
 
-                // Dynamic charts updates
-                if (data.gateMetrics) {
-                    gateChart.data.datasets[0].data = data.gateMetrics;
-                    gateChart.update();
-                }
-                if (data.foodMetrics) {
-                    foodChart.data.datasets[0].data = data.foodMetrics;
-                    foodChart.update();
-                }
-            }
-        } catch (error) {
-            // Fallback: Simulate fluctuation dynamically if backend isn't polling or live yet
-            simulateFluctuations();
-        }
     }
 
-    function simulateFluctuations() {
-        // Gate fluctuations
-        const randomizedGates = gateChart.data.datasets[0].data.map(val => Math.max(5, Math.min(90, val + Math.floor(Math.random() * 11) - 5)));
-        gateChart.data.datasets[0].data = randomizedGates;
-        gateChart.update();
+    update();
 
-        // Food court fluctuations
-        const randomizedFood = foodChart.data.datasets[0].data.map(val => Math.max(10, Math.min(100, val + Math.floor(Math.random() * 15) - 7)));
-        foodChart.data.datasets[0].data = randomizedFood;
-        foodChart.update();
+}
+
+
+// ===============================
+// Progress Bars
+// ===============================
+
+function updateProgress(className, value) {
+
+    const bar = document.querySelector("." + className);
+
+    const label = document.getElementById(className);
+
+    if (bar)
+        bar.style.width = value + "%";
+
+    if (label)
+        label.innerHTML = value + "%";
+
+}
+
+
+// ===============================
+// Dashboard Loader
+// ===============================
+
+async function loadDashboard() {
+
+    try {
+
+        const response = await fetch(API_BASE + "/dashboard");
+
+        if (!response.ok)
+            throw new Error("Dashboard API failed.");
+
+        const data = await response.json();
+
+
+        // ---------------- KPIs ----------------
+
+        animateValue("visitors", data.visitors || 48352);
+
+        document.getElementById("occupancy").innerHTML =
+            (data.occupancy || 82) + "%";
+
+        animateValue("incidents", data.incidents || 3);
+
+        document.getElementById("gates").innerHTML =
+            data.gates || "16 / 20";
+
+
+        // ---------------- Crowd ----------------
+
+        updateProgress("north", data.crowd?.north || 80);
+        updateProgress("south", data.crowd?.south || 60);
+        updateProgress("east", data.crowd?.east || 90);
+        updateProgress("west", data.crowd?.west || 45);
+
+
+        // ---------------- Summary ----------------
+
+        document.getElementById("summary").innerHTML =
+            data.summary ||
+            `
+            <strong>Operational Summary</strong><br><br>
+
+            • Stadium operations are normal.<br>
+            • Crowd density increasing in East Stand.<br>
+            • Transportation operating smoothly.<br>
+            • Accessibility services fully available.<br>
+            • No major security threats detected.
+            `;
+
+
     }
 
-    // Set polling dynamic intervals (Every 5 Seconds)
-    setInterval(updateDashboardTelemetry, 5000);
+    catch (error) {
+
+        console.error(error);
+
+        // Demo Data
+
+        animateValue("visitors", 48352);
+
+        document.getElementById("occupancy").innerHTML = "82%";
+
+        animateValue("incidents", 3);
+
+        document.getElementById("gates").innerHTML = "16 / 20";
+
+        updateProgress("north", 80);
+        updateProgress("south", 60);
+        updateProgress("east", 90);
+        updateProgress("west", 45);
+
+        document.getElementById("summary").innerHTML =
+            `
+            <strong>Demo Mode</strong><br><br>
+
+            Backend unavailable.
+
+            Showing simulated FIFA World Cup 2026 operational data.
+            `;
+
+    }
+
+}
+
+
+// ===============================
+// Refresh Dashboard
+// ===============================
+
+loadDashboard();
+
+setInterval(loadDashboard, 30000);
+
+
+// ===============================
+// Card Hover Glow
+// ===============================
+
+document.querySelectorAll(".card").forEach(card => {
+
+    card.addEventListener("mousemove", e => {
+
+        const rect = card.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        card.style.background =
+            `radial-gradient(circle at ${x}px ${y}px,
+            rgba(0,194,255,.15),
+            rgba(15,23,42,.82) 60%)`;
+
+    });
+
+    card.addEventListener("mouseleave", () => {
+
+        card.style.background = "";
+
+    });
+
 });
+
