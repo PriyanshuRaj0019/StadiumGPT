@@ -1,95 +1,115 @@
 document.addEventListener("DOMContentLoaded", () => {
-    fetchDashboardData();
-});
+    // Apne setup ke hisab se backend URL adjust karein (e.g., localhost ya render URL)
+    const API_BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+        ? "http://127.0.0.1:8000"
+        : "https://stadiumgpt.onrender.com"; // Replace with your production Render backend URL if deployed
 
-async function fetchDashboardData() {
-    try {
-        // FIXED: Added /api to the route
-        const data = await api.get("/api/dashboard");
-        
-        // 1. Update AI Insight Banner
-        const aiTextEl = document.getElementById("ai-insight-text");
-        aiTextEl.textContent = data.ai_insight;
+    // 1. Initial Empty Data Arrays for Real-time Generation
+    const gateLabels = ['Gate A', 'Gate B', 'Gate C', 'Gate D', 'Gate E'];
+    const initialGateData = [15, 45, 12, 60, 25]; // Simulation initial points in minutes
+    
+    const foodLabels = ['North Food Plaza', 'South Concession', 'East Lounge', 'West Fast Food'];
+    const initialFoodData = [30, 85, 40, 55]; // Capacity percentages
 
-        // 2. Update Top Metric Cards
-        const telemetry = data.telemetry;
-        document.getElementById("metric-attendance").textContent = telemetry.total_attendance.toLocaleString();
-        document.getElementById("metric-capacity").textContent = Math.round((telemetry.total_attendance / telemetry.max_capacity) * 100) + "%";
-        document.getElementById("metric-queue").textContent = telemetry.average_queue_time_mins + "m";
-
-        // 3. Render Charts
-        renderGateChart(telemetry.gates);
-        renderFoodCourtChart(telemetry.food_courts);
-
-    } catch (error) {
-        console.error("Dashboard failed to load:", error);
-        document.getElementById("ai-insight-text").textContent = "Failed to load real-time intelligence. Please check backend connection.";
-    }
-}
-
-// Global Chart defaults for Dark Theme
-Chart.defaults.color = '#94a3b8';
-Chart.defaults.font.family = "'Inter', sans-serif";
-
-function renderGateChart(gates) {
-    const ctx = document.getElementById('gateChart').getContext('2d');
-    const labels = gates.map(g => g.name);
-    const data = gates.map(g => g.occupancy_percent);
-
-    new Chart(ctx, {
+    // 2. Initialize Gate Congestion Bar Chart
+    const gateCtx = document.getElementById('gateChart').getContext('2d');
+    const gateChart = new Chart(gateCtx, {
         type: 'bar',
         data: {
-            labels: labels,
+            labels: gateLabels,
             datasets: [{
-                label: 'Gate Occupancy (%)',
-                data: data,
-                backgroundColor: 'rgba(0, 242, 254, 0.6)',
-                borderColor: '#00f2fe',
-                borderWidth: 1,
-                borderRadius: 4
+                label: 'Wait Time (Minutes)',
+                data: initialGateData,
+                backgroundColor: 'rgba(52, 211, 153, 0.6)',
+                borderColor: 'rgba(52, 211, 153, 1)',
+                borderWidth: 2,
+                borderRadius: 6
             }]
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100,
-                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
-                },
-                x: {
-                    grid: { display: false }
+                y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            },
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+
+    // 3. Initialize Food Court Load Line Chart
+    const foodCtx = document.getElementById('foodChart').getContext('2d');
+    const foodChart = new Chart(foodCtx, {
+        type: 'line',
+        data: {
+            labels: foodLabels,
+            datasets: [{
+                label: 'Occupancy Load %',
+                data: initialFoodData,
+                borderColor: '#f59e0b',
+                backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                tension: 0.4,
+                fill: true,
+                borderWidth: 3,
+                pointBackgroundColor: '#f59e0b'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { max: 100, beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            },
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+
+    // 4. Async function to poll backend telemetry endpoint if implemented
+    async function updateDashboardTelemetry() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/telemetry`);
+            if (response.ok) {
+                const data = await response.json();
+                
+                // Update live text metrics
+                if (data.attendance) document.getElementById("stat-attendance").innerText = data.attendance.toLocaleString();
+                if (data.avgWaitTime) document.getElementById("stat-wait-time").innerText = `${data.avgWaitTime} mins`;
+                if (data.incidents !== undefined) document.getElementById("stat-incidents").innerText = data.incidents;
+                if (data.riskLevel) document.getElementById("stat-risk").innerText = data.riskLevel;
+
+                // Dynamic charts updates
+                if (data.gateMetrics) {
+                    gateChart.data.datasets[0].data = data.gateMetrics;
+                    gateChart.update();
+                }
+                if (data.foodMetrics) {
+                    foodChart.data.datasets[0].data = data.foodMetrics;
+                    foodChart.update();
                 }
             }
+        } catch (error) {
+            // Fallback: Simulate fluctuation dynamically if backend isn't polling or live yet
+            simulateFluctuations();
         }
-    });
-}
+    }
 
-function renderFoodCourtChart(foodCourts) {
-    const ctx = document.getElementById('foodChart').getContext('2d');
-    const labels = foodCourts.map(fc => fc.name);
-    const data = foodCourts.map(fc => fc.wait_time_mins);
+    function simulateFluctuations() {
+        // Gate fluctuations
+        const randomizedGates = gateChart.data.datasets[0].data.map(val => Math.max(5, Math.min(90, val + Math.floor(Math.random() * 11) - 5)));
+        gateChart.data.datasets[0].data = randomizedGates;
+        gateChart.update();
 
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: data,
-                backgroundColor: [
-                    'rgba(16, 185, 129, 0.7)', // Green (Quiet)
-                    'rgba(245, 158, 11, 0.7)', // Yellow (Moderate)
-                    'rgba(239, 68, 68, 0.7)'   // Red (Busy)
-                ],
-                borderColor: '#1e293b',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { position: 'bottom' }
-            }
-        }
-    });
-}
+        // Food court fluctuations
+        const randomizedFood = foodChart.data.datasets[0].data.map(val => Math.max(10, Math.min(100, val + Math.floor(Math.random() * 15) - 7)));
+        foodChart.data.datasets[0].data = randomizedFood;
+        foodChart.update();
+    }
+
+    // Set polling dynamic intervals (Every 5 Seconds)
+    setInterval(updateDashboardTelemetry, 5000);
+});
