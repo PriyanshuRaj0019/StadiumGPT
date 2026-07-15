@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StadiumGPT — Volunteer Copilot</title>
+    
+    <!-- VERCEL FIX: Absolute Paths (/) -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/copilot.css"> <!-- Shared CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo"><a href="index.html">Stadium<span>GPT</span></a></div>
+        <div class="nav-toggle"><span></span><span></span><span></span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="chat.html">AI Chat</a></li>
+            <li><a href="navigation.html">Navigation</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li class="active"><a href="volunteer.html">Volunteer</a></li>
+            <li><a href="accessibility.html">Accessibility</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-container">
+        <header class="hero" style="margin-bottom: 2rem; text-align: left;">
+            <h1>Volunteer Copilot</h1>
+            <p>Instant GenAI Standard Operating Procedures (SOPs) for incident management.</p>
+        </header>
+
+        <section class="copilot-layout">
+            <aside class="action-sidebar">
+                <button class="action-btn" data-incident="Medical Emergency"><i class="fas fa-briefcase-medical"></i> Medical Emergency</button>
+                <button class="action-btn" data-incident="Lost Child"><i class="fas fa-child"></i> Lost Child</button>
+                <button class="action-btn" data-incident="Security Alert"><i class="fas fa-shield-alt"></i> Security Alert</button>
+                <button class="action-btn" data-incident="Lost Item"><i class="fas fa-wallet"></i> Lost Passport/Wallet</button>
+            </aside>
+
+            <div class="response-area">
+                <h2>Incident Action Plan</h2>
+                <p>Select an incident type to generate an immediate, contextual SOP.</p>
+                
+                <div class="ai-output-box" id="sop-output">
+                    <h3 id="sop-title">Generating...</h3>
+                    <div id="sop-content"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content"><p>&copy; 2026 PromptWars Hackathon. Engineered by <span>StadiumGPT Core Team</span>.</p></div>
+    </footer>
+
+    <!-- VERCEL FIX: Absolute Paths (/) -->
+    <script src="/js/api.js"></script>
+    <script src="/js/volunteer.js"></script>
+</body>
+</html>

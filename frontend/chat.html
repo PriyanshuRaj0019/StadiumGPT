@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StadiumGPT — AI Chat</title>
+    <!-- VERCEL FIX: Absolute Paths (/) -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/chat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo">
+            <a href="index.html">Stadium<span>GPT</span></a>
+        </div>
+        <div class="nav-toggle">
+            <span></span><span></span><span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li class="active"><a href="chat.html">AI Chat</a></li>
+            <li><a href="navigation.html">Navigation</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+            <li><a href="accessibility.html">Accessibility</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-container">
+        <header class="hero" style="margin-bottom: 2rem;">
+            <h1>Stadium Assistant</h1>
+            <p>Ask anything about gates, seating, food, and stadium rules.</p>
+        </header>
+
+        <section class="chat-container">
+            <!-- NEW Multilingual Header -->
+            <div class="chat-header">
+                <div style="display: flex; align-items: center; gap: 1rem; flex: 1;">
+                    <i class="fas fa-robot" style="color: var(--primary); font-size: 1.5rem;"></i>
+                    <h2>Gemini Copilot</h2>
+                </div>
+                <!-- Multilingual Dropdown -->
+                <select id="lang-select" style="background: rgba(15, 23, 42, 0.8); color: #fff; border: 1px solid var(--card-border); border-radius: 6px; padding: 0.3rem 0.5rem; outline: none; cursor: pointer;">
+                    <option value="English">🇬🇧 English</option>
+                    <option value="Spanish">🇪🇸 Español</option>
+                    <option value="French">🇫🇷 Français</option>
+                    <option value="Arabic">🇸🇦 العربية</option>
+                </select>
+            </div>
+            
+            <div class="chat-box" id="chat-box">
+                <div class="message bot">
+                    Hello! I'm your Stadium Assistant for the FIFA World Cup 2026. How can I help you today?
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="e.g., Where is Gate 4?" autocomplete="off">
+                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 PromptWars Hackathon. Engineered by <span>StadiumGPT Core Team</span>.</p>
+        </div>
+    </footer>
+
+    <!-- VERCEL FIX: Absolute Paths (/) -->
+    <script src="/js/api.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/chat.js"></script>
+</body>
+</html>

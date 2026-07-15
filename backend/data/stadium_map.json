@@ -1,0 +1,11 @@
+{
+    "locations": {
+        "Gate 1": {"lat": 40.8145, "lng": -74.0745},
+        "Gate 2": {"lat": 40.8125, "lng": -74.0745},
+        "Food Court A": {"lat": 40.8135, "lng": -74.0730},
+        "Food Court B": {"lat": 40.8140, "lng": -74.0760},
+        "Section 112": {"lat": 40.8130, "lng": -74.0755},
+        "Washroom (North)": {"lat": 40.8142, "lng": -74.0750},
+        "Medical Center": {"lat": 40.8130, "lng": -74.0735}
+    }
+}

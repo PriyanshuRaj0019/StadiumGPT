@@ -1,0 +1,86 @@
+[
+  {
+    "title": "Main Stadium Entrance Gate A",
+    "description": "Primary entrance for general spectators. Includes ticket scanning, security checks, and information counters.",
+    "location": "North side of the stadium near Parking Zone A",
+    "category": "Entrance",
+    "details": "Gate A supports high crowd capacity and has separate lanes for regular, VIP, and accessible entry."
+  },
+  {
+    "title": "Wheelchair Accessible Entrance",
+    "description": "Dedicated entrance designed for wheelchair users and visitors with mobility assistance requirements.",
+    "location": "East side of the stadium near Accessible Parking Area",
+    "category": "Accessibility",
+    "details": "Includes ramps, elevators, priority security lanes, and assistance staff."
+  },
+  {
+    "title": "VIP Entrance Lounge",
+    "description": "Premium entrance area for VIP guests, sponsors, and officials.",
+    "location": "West side of the stadium",
+    "category": "VIP",
+    "details": "Provides private security screening, lounge access, hospitality services, and premium seating connectivity."
+  },
+  {
+    "title": "Food Court Area",
+    "description": "Large food and beverage zone offering multiple cuisines and refreshments.",
+    "location": "Level 1, South Concourse",
+    "category": "Food",
+    "details": "Contains vegetarian, international food stalls, water stations, and digital payment facilities."
+  },
+  {
+    "title": "Emergency Medical Center",
+    "description": "Medical facility for handling spectator injuries and emergency situations.",
+    "location": "Ground Floor near Gate C",
+    "category": "Medical",
+    "details": "Equipped with doctors, first aid stations, ambulances, and emergency response teams."
+  },
+  {
+    "title": "Lost and Found Center",
+    "description": "Facility where spectators can report or collect lost items.",
+    "location": "Main Information Desk near Gate B",
+    "category": "Support",
+    "details": "Supports multilingual assistance and digital lost-item tracking."
+  },
+  {
+    "title": "Metro Shuttle Pickup Point",
+    "description": "Dedicated transportation zone connecting the stadium with nearby metro stations.",
+    "location": "South Parking Area",
+    "category": "Transportation",
+    "details": "Provides shuttle services before and after matches with real-time crowd updates."
+  },
+  {
+    "title": "Parking Zone A",
+    "description": "Parking facility for private vehicles and ride-sharing drop-offs.",
+    "location": "North side of stadium",
+    "category": "Parking",
+    "details": "Includes EV charging stations, security monitoring, and digital parking guidance."
+  },
+  {
+    "title": "Fan Merchandise Store",
+    "description": "Official store selling team jerseys, souvenirs, and tournament merchandise.",
+    "location": "East Concourse Level 2",
+    "category": "Shopping",
+    "details": "Supports digital payments and multilingual customer assistance."
+  },
+  {
+    "title": "Sustainability Information Zone",
+    "description": "Area showcasing stadium sustainability initiatives.",
+    "location": "Central Concourse",
+    "category": "Sustainability",
+    "details": "Displays information about renewable energy, waste management, recycling, and water conservation."
+  },
+  {
+    "title": "Security Control Room",
+    "description": "Central monitoring facility for stadium safety operations.",
+    "location": "Restricted Area Level 3",
+    "category": "Operations",
+    "details": "Uses CCTV monitoring, crowd analytics, emergency alerts, and AI-based incident detection."
+  },
+  {
+    "title": "Family Seating Section",
+    "description": "Dedicated seating area for families with children.",
+    "location": "North East Stand",
+    "category": "Seating",
+    "details": "Provides comfortable seating, child assistance facilities, and nearby restrooms."
+  }
+]

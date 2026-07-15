@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StadiumGPT — FIFA World Cup 2026</title>
+    
+    <!-- UPDATED: Using absolute paths (/) for Vercel -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo">
+            <a href="index.html">Stadium<span>GPT</span></a>
+        </div>
+        <div class="nav-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links">
+            <li class="active"><a href="index.html">Home</a></li>
+            <li><a href="chat.html">AI Chat</a></li>
+            <li><a href="navigation.html">Navigation</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+            <li><a href="accessibility.html">Accessibility</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-container">
+        <header class="hero">
+            <h1>StadiumGPT</h1>
+            <p>Next-Generation GenAI Smart Stadium Operations & Tournament Assistant for FIFA World Cup 2026.</p>
+            
+            <div class="status-banner" style="margin: 2rem auto 0; max-width: 600px; transition: all 0.4s;">
+                <span id="backend-status-text">Initializing internal connectivity systems...</span>
+            </div>
+        </header>
+
+        <section class="feature-grid">
+            <div class="feature-card" onclick="window.location.href='chat.html'">
+                <div class="card-icon"><i class="fas fa-comments"></i></div>
+                <h3>AI Stadium Assistant</h3>
+                <p>Instant context-aware responses regarding seats, gate locations, allowed items, and general tournament parameters via RAG pipelines.</p>
+            </div>
+
+            <div class="feature-card" onclick="window.location.href='navigation.html'">
+                <div class="card-icon"><i class="fas fa-route"></i></div>
+                <h3>Smart Navigation</h3>
+                <p>Crowd-aware walking routes and dynamic estimation metrics mapping out critical checkpoints seamlessly.</p>
+            </div>
+
+            <div class="feature-card" onclick="window.location.href='dashboard.html'">
+                <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>Crowd Intelligence</h3>
+                <p>Real-time telemetry simulations monitoring gate queue density metrics, stadium bottlenecks, and operational loads visually.</p>
+            </div>
+
+            <div class="feature-card" onclick="window.location.href='volunteer.html'">
+                <div class="card-icon"><i class="fas fa-hands-helping"></i></div>
+                <h3>Volunteer Copilot</h3>
+                <p>Instant access to standard emergency operating protocols (SOP) addressing security alerts or lost assets efficiently.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 PromptWars Hackathon. Engineered by <span>StadiumGPT Core Team</span>.</p>
+        </div>
+    </footer>
+
+    <!-- UPDATED: Using absolute paths (/) for Vercel -->
+    <script src="/js/api.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>

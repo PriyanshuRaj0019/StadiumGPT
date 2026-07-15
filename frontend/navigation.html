@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StadiumGPT — Smart Navigation</title>
+    
+    <!-- VERCEL FIX: Absolute Paths (/) -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/navigation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet.js CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo">
+            <a href="index.html">Stadium<span>GPT</span></a>
+        </div>
+        <div class="nav-toggle">
+            <span></span><span></span><span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="chat.html">AI Chat</a></li>
+            <li class="active"><a href="navigation.html">Navigation</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+            <li><a href="accessibility.html">Accessibility</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-container">
+        <header class="hero" style="margin-bottom: 1rem; text-align: left;">
+            <h1>Smart Navigation</h1>
+            <p>Find AI-optimized, crowd-aware walking routes across the stadium.</p>
+        </header>
+
+        <section class="nav-layout">
+            <!-- Left Sidebar Controls -->
+            <aside class="nav-sidebar">
+                <h2><i class="fas fa-map-marked-alt"></i> Route Planner</h2>
+                
+                <form id="nav-form" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="input-group">
+                        <label for="start-location">Current Location</label>
+                        <select id="start-location" required>
+                            <option value="" disabled selected>Select starting point...</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="dest-location">Destination</label>
+                        <select id="dest-location" required>
+                            <option value="" disabled selected>Select destination...</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-navigate">
+                        <i class="fas fa-route"></i> Find Best Route
+                    </button>
+                </form>
+
+                <!-- AI GenAI Results Panel -->
+                <div class="route-result" id="route-result">
+                    <h4><i class="fas fa-bolt"></i> AI Live Routing</h4>
+                    <div class="route-time" id="route-time">-- mins</div>
+                    <div class="route-ai-text" id="route-ai-text">Analyzing crowd density and generating the optimal path...</div>
+                </div>
+            </aside>
+
+            <!-- Right Map Canvas -->
+            <div class="map-container" id="stadium-map"></div>
+        </section>
+    </main>
+
+    <!-- Leaflet.js Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- VERCEL FIX: Absolute Paths (/) -->
+    <script src="/js/api.js"></script>
+    <script src="/js/navigation.js"></script>
+</body>
+</html>

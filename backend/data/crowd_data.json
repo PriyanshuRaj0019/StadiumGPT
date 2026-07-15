@@ -1,0 +1,16 @@
+{
+    "total_attendance": 52400,
+    "max_capacity": 82500,
+    "average_queue_time_mins": 14,
+    "gates": [
+        {"name": "Gate 1 (VIP)", "occupancy_percent": 30, "queue_length": 15},
+        {"name": "Gate 2 (General)", "occupancy_percent": 65, "queue_length": 120},
+        {"name": "Gate 3 (General)", "occupancy_percent": 88, "queue_length": 310},
+        {"name": "Gate 4 (General)", "occupancy_percent": 45, "queue_length": 85}
+    ],
+    "food_courts": [
+        {"name": "Food Court A", "status": "Moderate", "wait_time_mins": 10},
+        {"name": "Food Court B", "status": "Busy", "wait_time_mins": 25},
+        {"name": "Food Court C", "status": "Quiet", "wait_time_mins": 3}
+    ]
+}

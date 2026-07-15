@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StadiumGPT — Accessibility</title>
+    
+    <!-- VERCEL FIX: Absolute Paths (/) -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/copilot.css"> <!-- Shared CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo"><a href="index.html">Stadium<span>GPT</span></a></div>
+        <div class="nav-toggle"><span></span><span></span><span></span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="chat.html">AI Chat</a></li>
+            <li><a href="navigation.html">Navigation</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+            <li class="active"><a href="accessibility.html">Accessibility</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-container">
+        <header class="hero" style="margin-bottom: 2rem; text-align: left;">
+            <h1>Accessibility Assistant</h1>
+            <p>Barrier-free navigation and support for all fans.</p>
+        </header>
+
+        <section class="copilot-layout">
+            <aside class="action-sidebar">
+                <h3><i class="fas fa-wheelchair"></i> Facilities</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+                    We offer dedicated elevators, sensory quiet rooms, and audio descriptive commentary for matches.
+                </p>
+                <div style="background: rgba(0, 242, 254, 0.1); padding: 1rem; border-radius: 8px; border: 1px solid rgba(0, 242, 254, 0.2);">
+                    <i class="fas fa-phone-alt" style="color: var(--primary);"></i> 
+                    <span style="color: #fff; font-weight: 500; margin-left: 0.5rem;">Mobility Cart Request: *2026</span>
+                </div>
+            </aside>
+
+            <div class="response-area">
+                <h2>How can we help you today?</h2>
+                <form class="custom-form" id="access-form">
+                    <input type="text" id="access-input" placeholder="e.g., Where is the closest elevator to Gate 2?" autocomplete="off" required>
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+                
+                <div class="ai-output-box" id="access-output" style="border-left-color: #10b981;">
+                    <h3 style="color: #10b981;"><i class="fas fa-info-circle"></i> AI Assistance</h3>
+                    <p id="access-content"></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content"><p>&copy; 2026 PromptWars Hackathon. Engineered by <span>StadiumGPT Core Team</span>.</p></div>
+    </footer>
+
+    <!-- VERCEL FIX: Absolute Paths (/) -->
+    <script src="/js/api.js"></script>
+    <script src="/js/accessibility.js"></script>
+</body>
+</html>
